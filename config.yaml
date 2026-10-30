@@ -1,0 +1,28 @@
+repositories:
+  - .
+database: .security-agent.db
+report_directory: reports
+intelligence_poll_minutes: 15
+gmail_poll_minutes: 5
+digest_hour_local: 9
+thresholds:
+  immediate: 70
+  digest: 35
+enable_llm: true
+openai_model: gpt-4o-mini
+rss_feeds: []
+request_timeout_seconds: 30
+
+gmail:
+  enabled: false
+  mailbox: me
+  pubsub_topic: ""
+  pubsub_subscription: ""
+  credentials_file: ""
+  oauth_client_file: ""
+  service_account_file: ""
+  approved_senders: []
+  approved_domains: []
+  require_authentication_pass: true
+  max_content_bytes: 100000
+

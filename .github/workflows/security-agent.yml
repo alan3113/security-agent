@@ -1,0 +1,37 @@
+name: Dependency security scan
+
+on:
+  pull_request:
+    paths:
+      - '**/package-lock.json'
+      - '**/requirements.txt'
+      - '**/poetry.lock'
+      - '**/go.sum'
+      - '**/Cargo.lock'
+      - '**/pom.xml'
+      - 'security_agent/**'
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install .
+      - name: Scan dependencies
+        run: security-agent scan --no-llm --dry-run
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-agent-report
+          path: reports/
+          if-no-files-found: ignore

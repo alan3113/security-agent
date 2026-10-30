@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
+*.db
+reports/
+.env
+gmail-token.json
+client-secret*.json
+service-account*.json
+

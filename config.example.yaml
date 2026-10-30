@@ -1,0 +1,42 @@
+repositories:
+  - .
+database: .security-agent.db
+report_directory: reports
+intelligence_poll_minutes: 15
+gmail_poll_minutes: 5
+digest_hour_local: 9
+
+thresholds:
+  immediate: 70
+  digest: 35
+
+# LLM triage is skipped automatically when OPENAI_API_KEY is absent.
+enable_llm: true
+openai_model: gpt-4o-mini
+
+# Set GOOGLE_CHAT_WEBHOOK_URL in the environment; never place it here.
+
+rss_feeds: []
+request_timeout_seconds: 30
+
+# Event-driven Gmail intake. Use either an authorized-user credentials file or
+# a service account with Workspace domain-wide delegation, never both.
+gmail:
+  enabled: false
+  mailbox: security-alerts@example.com
+  pubsub_topic: projects/your-project/topics/gmail-security
+  pubsub_subscription: projects/your-project/subscriptions/gmail-security-agent
+  credentials_file: gmail-token.json
+  oauth_client_file: client-secret.json
+  service_account_file: ""
+  incoming_label: Security/Incoming
+  processing_label: Security/Processing
+  matched_label: Security/Matched
+  no_match_label: Security/NoMatch
+  review_label: Security/NeedsReview
+  error_label: Security/Error
+  approved_senders:
+    - security-team@example.com
+  approved_domains: []
+  require_authentication_pass: true
+  max_content_bytes: 100000
